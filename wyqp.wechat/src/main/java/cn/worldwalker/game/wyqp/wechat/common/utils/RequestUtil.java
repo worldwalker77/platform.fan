@@ -75,7 +75,7 @@ public class RequestUtil {
 	 */
 	public static void setUserSession(String token, UserSession userSession){
 		/**session 方式实现**/
-		if ("0".equals(Constant.isUserRedis)) {
+		if ("0".equals(Constant.isUseRedis)) {
 			HttpServletRequest request = getHttpServletRequest();
 			HttpSession session = request.getSession();
 			String userSessionStr = JsonUtil.toJson(userSession);
@@ -94,7 +94,7 @@ public class RequestUtil {
 	public static boolean isUserSessionExist(){
 		String sessionStr = null;
 		/**session 方式实现*/
-		if ("0".equals(Constant.isUserRedis)) {
+		if ("0".equals(Constant.isUseRedis)) {
 			HttpServletRequest request = getHttpServletRequest();
 			HttpSession session = request.getSession();
 			Object sessionObject = session.getAttribute("userSession");
