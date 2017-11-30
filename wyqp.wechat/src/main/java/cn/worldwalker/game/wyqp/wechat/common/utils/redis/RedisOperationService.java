@@ -9,7 +9,7 @@ import cn.worldwalker.game.wyqp.wechat.domain.UserSession;
 
 @Component
 public class RedisOperationService {
-	@Autowired
+//	@Autowired
 	private JedisTemplate jedisTemplate;
 	public UserSession getUserInfo(String token){
 		String temp = jedisTemplate.get(token);

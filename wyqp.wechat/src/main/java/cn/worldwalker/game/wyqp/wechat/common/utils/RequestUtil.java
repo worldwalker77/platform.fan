@@ -3,12 +3,14 @@ package cn.worldwalker.game.wyqp.wechat.common.utils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import cn.worldwalker.game.wyqp.wechat.common.utils.redis.JedisTemplate;
+import cn.worldwalker.game.wyqp.wechat.constant.Constant;
 import cn.worldwalker.game.wyqp.wechat.domain.UserSession;
 
 @Component
@@ -62,7 +64,6 @@ public class RequestUtil {
 	 * @return
 	 */
 	public static String getRequestId(){
-//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 		HttpServletRequest request = getHttpServletRequest();
 		String requestId = String.valueOf(request.getAttribute("requestId"));
 		return requestId;
@@ -74,66 +75,45 @@ public class RequestUtil {
 	 */
 	public static void setUserSession(String token, UserSession userSession){
 		/**session 方式实现**/
-//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-//		HttpServletRequest request = getHttpServletRequest();
-//		HttpSession session = request.getSession();
-//		String userSessionStr = JsonUtil.obj2json(userSession);
-//		session.setAttribute("userSession", userSessionStr);
-		
-		/**redis cookie 方式实现**/
-		jedisTemplate.setex(token, JsonUtil.toJson(userSession), MAX_TIME);
-		addCookie(LOGIN_COOKIE_NAME, token, MAX_TIME);
+		if ("0".equals(Constant.isUserRedis)) {
+			HttpServletRequest request = getHttpServletRequest();
+			HttpSession session = request.getSession();
+			String userSessionStr = JsonUtil.toJson(userSession);
+			session.setAttribute("userSession", userSessionStr);
+		}else{
+			/**redis cookie 方式实现**/
+			jedisTemplate.setex(token, JsonUtil.toJson(userSession), MAX_TIME);
+			addCookie(LOGIN_COOKIE_NAME, token, MAX_TIME);
+		}
 	}
-	
-	/**
-	 * 获取用户session
-	 * @return
-	 */
-//	public static UserSession getUserSession(){
-//		/**session 方式实现**/
-////		HttpServletRequest request = getHttpServletRequest();
-////		HttpSession session = request.getSession();
-////		UserSession userSession = null;
-////		Object sessionObject = session.getAttribute("userSession");
-////		if (null != sessionObject) {
-////			userSession = JsonUtil.json2pojo(String.valueOf(sessionObject), UserSession.class);
-////		}
-//		
-//		String token = getCookieValue(LOGIN_COOKIE_NAME);
-//		if (StringUtils.isEmpty(token)) {
-//			return null;
-//		}
-//		String sessionStr = jedisTemplate.get(token);
-//		if (StringUtils.isEmpty(sessionStr)) {
-//			return null;
-//		}
-//		UserSession userSession = JsonUtil.json2pojo(sessionStr, UserSession.class);
-//		return userSession;
-//	}
 	
 	/**
 	 * 判断用户session是否存在
 	 * @return
 	 */
 	public static boolean isUserSessionExist(){
+		String sessionStr = null;
 		/**session 方式实现*/
-//		HttpServletRequest request = getHttpServletRequest();
-//		HttpSession session = request.getSession();
-//		Object sessionObject = session.getAttribute("userSession");
-//		if (null != sessionObject) {
-//			return true;
-//		}
-		String token = getCookieValue(LOGIN_COOKIE_NAME);
-		if (StringUtils.isEmpty(token)) {
-			return false;
+		if ("0".equals(Constant.isUserRedis)) {
+			HttpServletRequest request = getHttpServletRequest();
+			HttpSession session = request.getSession();
+			Object sessionObject = session.getAttribute("userSession");
+			if (null == sessionObject) {
+				return false;
+			}
+			sessionStr = (String)sessionObject;
+		}else{
+			String token = getCookieValue(LOGIN_COOKIE_NAME);
+			if (StringUtils.isEmpty(token)) {
+				return false;
+			}
+			sessionStr = jedisTemplate.get(token);
+			if (StringUtils.isEmpty(sessionStr)) {
+				return false;
+			}
+			/**redis token延期*/
+			jedisTemplate.expire(token, MAX_TIME);
 		}
-		String sessionStr = jedisTemplate.get(token);
-		if (StringUtils.isEmpty(sessionStr)) {
-			return false;
-		}
-		/**redis token延期*/
-		jedisTemplate.expire(token, MAX_TIME);
-		
 		/**session存入当前线程*/
 		UserSession userSession = JsonUtil.toObject(sessionStr, UserSession.class);
 		setUserSession(userSession);
@@ -172,9 +152,9 @@ public class RequestUtil {
 		return null;
 	}
 	
-	@Autowired(required = true)
-	public void setJedisTemplate(JedisTemplate jedisTemplate) {
-		RequestUtil.jedisTemplate = jedisTemplate;
-	}
+//	@Autowired(required = true)
+//	public void setJedisTemplate(JedisTemplate jedisTemplate) {
+//		RequestUtil.jedisTemplate = jedisTemplate;
+//	}
 	
 }

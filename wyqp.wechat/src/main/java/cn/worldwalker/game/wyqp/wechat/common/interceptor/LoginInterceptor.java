@@ -3,17 +3,12 @@ package cn.worldwalker.game.wyqp.wechat.common.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import cn.worldwalker.game.wyqp.wechat.common.utils.RequestUtil;
-import cn.worldwalker.game.wyqp.wechat.common.utils.redis.JedisTemplate;
 
 public class LoginInterceptor  extends HandlerInterceptorAdapter {
-	
-	@Autowired
-	private JedisTemplate jedisTemplate;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws Exception {
