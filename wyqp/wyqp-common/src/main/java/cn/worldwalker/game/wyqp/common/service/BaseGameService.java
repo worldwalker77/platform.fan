@@ -111,10 +111,10 @@ public abstract class BaseGameService {
 		userInfo.setToken(loginToken);
 		/**设置赢牌概率*/
 		userInfo.setWinProbability(userModel.getWinProbability());
+		userInfo.setRoomCardNum(userModel.getRoomCardNum());
 		redisOperationService.setUserInfo(loginToken, userInfo);
 		/****-------*/
 //		redisOperationService.hdelOfflinePlayerIdRoomIdGameTypeTime(userModel.getPlayerId());
-		userInfo.setRoomCardNum(userModel.getRoomCardNum());
 		result.setData(userInfo);
 		return result;
 	}
