@@ -26,6 +26,7 @@ public enum ExceptionEnum {
     QUERY_WEIXIN_USER_INFO_FAIL(20, "获取微信用户信息失败"),
     TOTAL_GAME_OVER(21, "牌局已经结束"),
     ALREADY_IN_ROOM(22, "您已经在房间中，请输入房间号进入"),
+    GIVE_AWAY_ROOM_CARD_FAIL(23, "赠送房卡失败"),
     /**斗牛100-199*/
     
     /**斗牛200-299*/

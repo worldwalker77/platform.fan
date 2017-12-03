@@ -61,7 +61,7 @@ public class GameController {
 		
 		
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("wechat/index");
+		mv.setViewName("game/index");
 		UserInfo userInfo = null;
 		try {
 			userInfo = (UserInfo)commonGameService.login(code, deviceType, request).getData();
@@ -101,13 +101,13 @@ public class GameController {
 		if (StringUtils.isNotBlank(token)) {
 			if (StringUtils.isNotBlank(roomId)) {
 				if (StringUtils.isNotBlank(code)) {
-					mv.setViewName("wechat/zjh");
+					mv.setViewName("game/zjh");
 					mv.addObject("token", token);
 					mv.addObject("roomId", roomId);
 					mv.addObject("playerNumLimit", StringUtils.isBlank(playerNumLimit)?"":playerNumLimit);
 					return mv;
 				}else{
-					mv.setViewName("wechat/zjh");
+					mv.setViewName("game/zjh");
 					mv.addObject("token", token);
 					mv.addObject("roomId", roomId);
 					mv.addObject("playerNumLimit", StringUtils.isBlank(playerNumLimit)?"":playerNumLimit);
@@ -115,13 +115,13 @@ public class GameController {
 				}
 			}else{
 				if (StringUtils.isNotBlank(code)) {
-					mv.setViewName("wechat/zjh");
+					mv.setViewName("game/zjh");
 					mv.addObject("token", token);
 					mv.addObject("roomId", "");
 					mv.addObject("playerNumLimit", StringUtils.isBlank(playerNumLimit)?"":playerNumLimit);
 					return mv;
 				}else{
-					mv.setViewName("wechat/zjh");
+					mv.setViewName("game/zjh");
 					mv.addObject("token", token);
 					mv.addObject("roomId", "");
 					mv.addObject("playerNumLimit", StringUtils.isBlank(playerNumLimit)?"":playerNumLimit);

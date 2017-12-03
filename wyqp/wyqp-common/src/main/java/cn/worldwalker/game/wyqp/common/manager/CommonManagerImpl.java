@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.worldwalker.game.wyqp.common.constant.Constant;
 import cn.worldwalker.game.wyqp.common.dao.OrderDao;
 import cn.worldwalker.game.wyqp.common.dao.ProductDao;
 import cn.worldwalker.game.wyqp.common.dao.ProxyDao;
@@ -32,8 +31,6 @@ import cn.worldwalker.game.wyqp.common.domain.base.RoomCardLogModel;
 import cn.worldwalker.game.wyqp.common.domain.base.UserFeedbackModel;
 import cn.worldwalker.game.wyqp.common.domain.base.UserModel;
 import cn.worldwalker.game.wyqp.common.domain.base.UserRecordModel;
-import cn.worldwalker.game.wyqp.common.domain.base.VersionModel;
-import cn.worldwalker.game.wyqp.common.domain.nn.NnPlayerInfo;
 import cn.worldwalker.game.wyqp.common.enums.PlayerStatusEnum;
 import cn.worldwalker.game.wyqp.common.enums.RoomCardConsumeEnum;
 import cn.worldwalker.game.wyqp.common.enums.RoomCardOperationEnum;
@@ -321,10 +318,6 @@ public class CommonManagerImpl implements CommonManager{
 	@Override
 	public Integer getProxyIdByPlayerId(Integer playerId) {
 		return proxyDao.getProxyIdByPlayerId(playerId);
-	}
-	@Override
-	public VersionModel getVersion(VersionModel model) {
-		return versionDao.getVersion(model);
 	}
 	@Override
 	public Integer addRoomCard(Map<String, Object> map) {

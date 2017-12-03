@@ -29,9 +29,8 @@
        <!-- 配置默认的执行器。 -->  
        <setting name="defaultExecutorType" value="SIMPLE"/>  
     </settings>  
-<!--
-	<typeAliases>
-		<typeAlias type="com.jd.acs.server.web.domain.Users" alias="Users"/>
+    <typeAliases>
+		<typeAlias type="cn.worldwalker.game.wyqp.common.backend.GameQuery" alias="gameQuery"/>
+		<typeAlias type="cn.worldwalker.game.wyqp.common.backend.GameModel" alias="gameModel"/>
 	</typeAliases>
--->
 </configuration>

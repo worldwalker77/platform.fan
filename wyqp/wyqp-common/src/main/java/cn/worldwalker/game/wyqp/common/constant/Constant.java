@@ -74,17 +74,31 @@ public class Constant {
 	public final static String getTicketUrl = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
 	
 	public final static String domain = CustomizedPropertyConfigurer.getContextProperty("domain");
-	public final static String weixinHeadimgNginxRoot = CustomizedPropertyConfigurer.getContextProperty("weixin.headimg.nginx.root");
-	public final static String weixinHeadimgPath = CustomizedPropertyConfigurer.getContextProperty("weixin.headimg.path");
-	public final static String h5GameStaticPath = CustomizedPropertyConfigurer.getContextProperty("h5.game.static.path");
+	public final static String staticNginxRoot = CustomizedPropertyConfigurer.getContextProperty("static.nginx.root");
+	public final static String weixinHeadimgFolder = CustomizedPropertyConfigurer.getContextProperty("weixin.headimg.folder");
+	public final static String h5GameStaticFolder = CustomizedPropertyConfigurer.getContextProperty("h5.game.static.folder");
 	
-	public final static String localWxHeadImgPath = weixinHeadimgNginxRoot + weixinHeadimgPath;
+	public final static String localWxHeadImgPath = staticNginxRoot + weixinHeadimgFolder;
 	
-	public final static String downloadWxHeadImgUrl = "http://" + domain + weixinHeadimgPath;
+	public final static String downloadWxHeadImgUrl = "http://" + domain + weixinHeadimgFolder;
 	
 	public final static int userInfoOverTimeLimit = Integer.valueOf(CustomizedPropertyConfigurer.getContextProperty("user.info.over.time.limit"));
 	
 	public final static int gameInfoStorageType = Integer.valueOf(CustomizedPropertyConfigurer.getContextProperty("game.info.storage.type"));
 	
+	public final static String adminMobile = CustomizedPropertyConfigurer.getContextProperty("admin.mobile");
+	
+	public final static String clientFileUploadFolder = CustomizedPropertyConfigurer.getContextProperty("client.file.upload.folder");
+	
+	public final static String clientFileUnrarFolder = CustomizedPropertyConfigurer.getContextProperty("client.file.unrar.folder");
+	
+	public final static String clientFileUploadPath = staticNginxRoot + clientFileUploadFolder;
+	
+	public final static String clientFileUnrarPath = staticNginxRoot + clientFileUnrarFolder;
+	
+	public static final String UPDATE_RUL = "http://" + domain + clientFileUnrarFolder  + "VERSION";//"D:/test/";
+	
+	public static final String CODE_URL = "http://" + domain + clientFileUnrarFolder + "VERSION/game_code_VERSION.zip";//"D:/test/";
+
 
 }

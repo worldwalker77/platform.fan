@@ -1,9 +1,19 @@
 package cn.worldwalker.game.wyqp.common.dao;
 
-import cn.worldwalker.game.wyqp.common.domain.base.VersionModel;
+import java.util.List;
+
+import cn.worldwalker.game.wyqp.common.backend.VersionModel;
 
 public interface VersionDao {
-	 
-	 public VersionModel getVersion(VersionModel model);
-	 
+	
+	public Integer updateVersion(VersionModel versionModel);
+	
+	public List<VersionModel> selectVersionList(VersionModel versionModel);
+	
+	public Long selectVersionListCount(VersionModel versionModel);
+	
+	public VersionModel selectVersion(VersionModel versionModel);
+	
+	public void insertVersion(VersionModel versionModel);
+	
 }

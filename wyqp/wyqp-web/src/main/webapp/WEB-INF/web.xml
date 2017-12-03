@@ -33,5 +33,14 @@
 		<servlet-name>springmvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<!-- filter相关配置 -->
+	<filter>  
+	    <filter-name>logFilter</filter-name>  
+	    <filter-class>cn.worldwalker.game.wyqp.web.interceptor.LogFilter</filter-class>  
+  	</filter>  
+  	<filter-mapping>  
+	    <filter-name>logFilter</filter-name>  
+	    <url-pattern>/*</url-pattern>  
+  	</filter-mapping>
 	
 </web-app>

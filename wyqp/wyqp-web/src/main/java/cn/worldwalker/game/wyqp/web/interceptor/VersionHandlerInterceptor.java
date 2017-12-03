@@ -30,7 +30,7 @@ public class VersionHandlerInterceptor extends HandlerInterceptorAdapter {
 		}
 		modelAndView.addObject("version", System.currentTimeMillis());
 		modelAndView.addObject("domain", Constant.domain);
-		modelAndView.addObject("h5GameStaticUrl", "http://" + Constant.domain + Constant.h5GameStaticPath);
+		modelAndView.addObject("h5GameStaticUrl", "http://" + Constant.domain + Constant.h5GameStaticFolder);
 		super.postHandle(request, response, handler, modelAndView);
 	}
 
