@@ -26,4 +26,8 @@ public interface BackendService {
 	
 	public Result getProxys(GameQuery gameQuery);
 	
+	public Result modifyProxy(GameQuery gameQuery);
+	
+	public Result doModifyPassword(GameQuery gameQuery);
+	
 }

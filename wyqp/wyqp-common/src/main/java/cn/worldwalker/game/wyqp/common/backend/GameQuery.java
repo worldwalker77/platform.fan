@@ -6,7 +6,7 @@ public class GameQuery {
 	private String startDate;
 	private String endDate;
 	private long offset;
-	private int limit;
+	private int limit = 10;
 	
 	private String mobilePhone;
 	private String password;
@@ -14,7 +14,28 @@ public class GameQuery {
 	private Integer roomCardNum;
 	private String nickName;
 	private Integer winProbability;
+	private String wechatNum;
+	private String oldPassword;
+	private String newPassword;
 	
+	public String getOldPassword() {
+		return oldPassword;
+	}
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+	public String getNewPassword() {
+		return newPassword;
+	}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+	public String getWechatNum() {
+		return wechatNum;
+	}
+	public void setWechatNum(String wechatNum) {
+		this.wechatNum = wechatNum;
+	}
 	public Integer getWinProbability() {
 		return winProbability;
 	}

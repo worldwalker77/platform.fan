@@ -49,7 +49,7 @@ public class BackendController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("realName", RequestUtil.getUserSession().getRealName());
 		mv.addObject("proxyId", RequestUtil.getUserSession().getProxyId());
-		mv.addObject("nickName", RequestUtil.getUserSession().getNickName());
+		mv.addObject("playerId", RequestUtil.getUserSession().getPlayerId());
 		mv.addObject("mobilePhone", RequestUtil.getUserSession().getMobilePhone());
 		mv.addObject("wechatNum", RequestUtil.getUserSession().getWechatNum());
 		GameQuery gameQuery = new GameQuery();
@@ -166,6 +166,12 @@ public class BackendController {
 		return backendService.getProxys(gameQuery);
 	}
 	
+	@RequestMapping("proxy/modifyProxy")
+	@ResponseBody
+	public Result modifyProxy(@RequestBody GameQuery gameQuery){
+		return backendService.modifyProxy(gameQuery);
+	}
+	
 	/**
 	 * 赠送房卡页面
 	 * @return
@@ -189,6 +195,12 @@ public class BackendController {
 		GameQuery gameQuery = new GameQuery();
 		gameQuery.setPlayerId(playerId);
 		return backendService.getUserByCondition(gameQuery);
+	}
+	
+	@RequestMapping("proxy/doModifyPassword")
+	@ResponseBody
+	public Result doModifyPassword(@RequestBody GameQuery gameQuery){
+		return backendService.doModifyPassword(gameQuery);
 	}
 	
 }

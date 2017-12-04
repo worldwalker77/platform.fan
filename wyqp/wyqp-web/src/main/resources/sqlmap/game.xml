@@ -25,37 +25,38 @@
 	</resultMap>
 	
 	
-	<!-- <insert id="insertProxy" parameterType="proxyModel">  
-	     使用这种方式要注意，resultType是要设置的，否则将抛异常，该值对应的User类中的主键类型  
-	     keyProperty对应的是ProxyModel类中的主键名，假设取名为user_id，则这边也要改成user_id  
+	<insert id="insertProxy" parameterType="gameQuery">  
 	     <selectKey keyProperty="proxyId" resultType="Integer">  
 	         select LAST_INSERT_ID()  
 	     </selectKey>  
 	     insert into t_proxy( 
 		     					player_id, 
-		     					nick_name,
 		     					mobile_phone, 
 		     					password,
 		     					wechat_num,
-		     					real_name, 
-		     					id_card_no,
-		     					extract_amount, 
-		     					remainder_amount,
-		     					create_time
+		     					create_time,
+		     					update_time
 	     					) 
 	     			values(  
 		     					#{playerId}, 
-		     					#{nickName}, 
 		     					#{mobilePhone},
 		     					#{password},
 		     					#{wechatNum},
-		     					#{realName}, 
-		     					#{idCardNo}, 
-		     					#{extractAmount},
-		     					#{remainderAmount},
+		     					now(),
 		     					now()
 		     				)    
-    </insert> -->
+    </insert>
+    
+    <update id="updateProxy"  parameterType="gameQuery">
+		 UPDATE t_proxy
+		 <trim prefix="set" suffixOverrides=",">
+		  <if test="mobilePhone!=null">mobile_phone=#{mobilePhone},</if>
+		  <if test="wechatNum!=null">wechat_num=#{wechatNum},</if>
+		  <if test="playerId!=null">player_id=#{playerId},</if>
+		  <if test="newPassword!=null">password=#{newPassword},</if>
+		 </trim>
+		 WHERE proxy_id=#{proxyId}
+	</update>
     
 	<select id="getProxyInfo"  parameterType = "gameQuery" resultMap="gameModelResultMap">
 	    select total_income, extract_amount, remainder_amount
@@ -140,6 +141,9 @@
 	    select proxy_id,player_id,nick_name,mobile_phone,wechat_num,real_name
 	    from t_proxy
 	    where mobile_phone = #{mobilePhone} and password = #{password}
+	    <if test="proxyId !=null ">  
+	       and proxy_id = #{proxyId}
+	    </if>
 	</select>
 	
 	

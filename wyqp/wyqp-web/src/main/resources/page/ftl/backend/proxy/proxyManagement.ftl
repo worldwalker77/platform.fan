@@ -101,7 +101,7 @@
 		            </div>
 		            <div class="modal-footer">
 		                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-		                <button type="button" class="btn btn-primary" id="editProxy">确定</button>
+		                <button type="button" class="btn btn-primary" id="modifyProxy">确定</button>
 		            </div>
 		        </div><!-- /.modal-content -->
 		    </div><!-- /.modal -->

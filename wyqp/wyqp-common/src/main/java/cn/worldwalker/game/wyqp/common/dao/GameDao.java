@@ -30,5 +30,9 @@ public interface GameDao {
 	public List<GameModel> getProxys(GameQuery gameQuery);
 	public Long getProxysCount(GameQuery gameQuery);
 	
+	public Integer insertProxy(GameQuery gameQuery);
+	
+	public Integer updateProxy(GameQuery gameQuery);
+	
 	
 }

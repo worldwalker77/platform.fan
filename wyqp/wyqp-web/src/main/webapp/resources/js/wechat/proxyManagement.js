@@ -95,6 +95,9 @@
 		$("#editWechatNum").val('');
 		$("#hiddenProxyId").val('0');
     	$('#myModal').modal({});
+	});
+    
+    $('#modifyProxy').click(function(){
     	proxyManagementUtil.modifyProxy();
 	});
 });
@@ -128,7 +131,7 @@ var proxyManagementUtil = {
 		        		$('#myModal').modal('hide')
 		        		BootstrapDialog.show({
 		                    title: '成功提示',
-		                    message: '玩家' + $("#editNickName").val() + "的赢牌概率成功修改为：" + $("#editWinProbability").val(),
+		                    message: '代理操作成功',
 		                    buttons: [{
 		                        label: '确定',
 		                        action: function(dialog) {

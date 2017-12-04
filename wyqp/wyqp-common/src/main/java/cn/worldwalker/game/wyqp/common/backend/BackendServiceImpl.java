@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +15,13 @@ import cn.worldwalker.game.wyqp.common.dao.GameDao;
 import cn.worldwalker.game.wyqp.common.exception.BusinessException;
 import cn.worldwalker.game.wyqp.common.exception.ExceptionEnum;
 import cn.worldwalker.game.wyqp.common.result.Result;
+import cn.worldwalker.game.wyqp.common.utils.JsonUtil;
 import cn.worldwalker.game.wyqp.common.utils.MD5Util1;
 import cn.worldwalker.game.wyqp.common.utils.RequestUtil;
 
 @Service
 public class BackendServiceImpl implements BackendService{
-	
+	private static final Logger log = Logger.getLogger(BackendServiceImpl.class);
 	@Autowired
 	private GameDao gameDao;
 	@Autowired
@@ -249,6 +253,79 @@ public class BackendServiceImpl implements BackendService{
 		map.put("total", total);
 		map.put("rows", list);
 		result.setData(map);
+		return result;
+	}
+	@Override
+	public Result modifyProxy(GameQuery gameQuery) {
+		Result result = new Result();
+		if (!isAdmin()) {
+			result.setCode(1);
+			result.setDesc("无权限");
+			return result;
+		}
+		if (gameQuery.getProxyId() == null 
+			|| StringUtils.isBlank(gameQuery.getMobilePhone())
+			|| gameQuery.getPlayerId() == null
+			|| StringUtils.isBlank(gameQuery.getWechatNum())) {
+			result.setCode(1);
+			result.setDesc("参数不能为空");
+			return result;
+		}
+		try {
+			GameQuery tempQuery = new GameQuery();
+			tempQuery.setPlayerId(gameQuery.getPlayerId());
+			List<GameModel> list = gameDao.getUserByCondition(tempQuery);
+			if (CollectionUtils.isEmpty(list)) {
+				result.setCode(1);
+				result.setDesc("游戏id不存在");
+				return result;
+			}
+			if (gameQuery.getProxyId() > 0) {
+				gameDao.updateProxy(gameQuery);
+			}else{
+				gameQuery.setPassword(gameQuery.getMobilePhone());
+				gameDao.insertProxy(gameQuery);
+			}
+		} catch (Exception e) {
+			log.error("modifyProxy异常，gameQuery：" + JsonUtil.toJson(gameQuery), e);
+			result.setCode(1);
+			result.setDesc("数据库异常");
+			return result;
+		}
+		return result;
+	}
+	@Override
+	public Result doModifyPassword(GameQuery gameQuery) {
+		
+		Result result = new Result();
+		if (StringUtils.isBlank(gameQuery.getMobilePhone())
+			|| StringUtils.isBlank(gameQuery.getOldPassword())
+			|| StringUtils.isBlank(gameQuery.getNewPassword())) {
+			result.setCode(1);
+			result.setDesc("参数不能为空");
+			return result;
+		}
+		try {
+			GameQuery tempQuery = new GameQuery();
+			tempQuery.setMobilePhone(gameQuery.getMobilePhone());
+			tempQuery.setPassword(gameQuery.getOldPassword());
+			tempQuery.setProxyId(RequestUtil.getProxyId());
+			GameModel tempGameModel = gameDao.getProxyByPhoneAndPassword(tempQuery);
+			if (null == tempGameModel) {
+				result.setCode(1);
+				result.setDesc("手机号或者老密码错误");
+				return result;
+			}
+			GameQuery tempQuery1 = new GameQuery();
+			tempQuery1.setProxyId(RequestUtil.getProxyId());
+			tempQuery1.setNewPassword(gameQuery.getNewPassword());
+			gameDao.updateProxy(gameQuery);
+		} catch (Exception e) {
+			log.error("doModifyPassword异常，gameQuery：" + JsonUtil.toJson(gameQuery), e);
+			result.setCode(1);
+			result.setDesc("数据库异常");
+			return result;
+		}
 		return result;
 	}
 
