@@ -15,8 +15,23 @@ import cn.worldwalker.game.wyqp.common.constant.Constant;
      */  
     public class UrlImgDownLoadUtil {  
     	public static void main(String[] args) {
-    		System.out.println(getLocalImgUrl("http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLzL5Bf9HpibQR27xNRia4KrXtsruqd3viamaDdN8aQul0TL0U75l3AHzsFiciaLBwib8ntQ8Dsj6FRGqmQ/0", 111111));
+    		System.out.println(getLocalImgUrl1("http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLzL5Bf9HpibQR27xNRia4KrXtsruqd3viamaDdN8aQul0TL0U75l3AHzsFiciaLBwib8ntQ8Dsj6FRGqmQ/0", 111111));
     	}
+    	
+    	  public static String getLocalImgUrl1(String strUrl, Integer playerId){
+          	String fileName = playerId + ".jpg";  
+          	File file = new File("C:/Users/jinfeng.liu/Desktop/game-fan/" + fileName);
+          	if (file.exists()) {
+  				return "" + fileName;
+  			}
+          	byte[] btImg = getImageFromNetByUrl(strUrl);  
+              if(null != btImg && btImg.length > 0){  
+                  writeImageToDisk(btImg, file);  
+              }else{  
+                  System.out.println("没有从该连接获得内容");  
+              }  
+              return "" + fileName;
+          }
     	
         public static String getLocalImgUrl(String strUrl, Integer playerId){
         	String fileName = playerId + ".jpg";  
