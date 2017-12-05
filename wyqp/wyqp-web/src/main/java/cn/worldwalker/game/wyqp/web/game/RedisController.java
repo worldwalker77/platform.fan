@@ -30,8 +30,8 @@ public class RedisController {
 					if (Constant.gameInfoStorageType == 0 ) {
 						response.setValue(jedisTemplate.get(request.getKey()));
 					}else{
-						if ("logInfoFuse".equals(request.getKey())) {
-							response.setValue(GameInfoMemoryContainer.logInfoFuse);
+						if ("logFuse".equals(request.getKey())) {
+							response.setValue(GameInfoMemoryContainer.logFuse);
 						}else if("loginFuse".equals(request.getKey())){
 							response.setValue(GameInfoMemoryContainer.loginFuse);
 						}else{
@@ -44,9 +44,9 @@ public class RedisController {
 						jedisTemplate.set(request.getKey(), String.valueOf(request.getValue()));	
 						response.setValue(jedisTemplate.get(request.getKey()));
 					}else{
-						if ("logInfoFuse".equals(request.getKey())) {
-							GameInfoMemoryContainer.logInfoFuse = String.valueOf(request.getValue());
-							response.setValue(GameInfoMemoryContainer.logInfoFuse);
+						if ("logFuse".equals(request.getKey())) {
+							GameInfoMemoryContainer.logFuse = String.valueOf(request.getValue());
+							response.setValue(GameInfoMemoryContainer.logFuse);
 						}else if("loginFuse".equals(request.getKey())){
 							GameInfoMemoryContainer.loginFuse = String.valueOf(request.getValue());
 							response.setValue(GameInfoMemoryContainer.loginFuse);
@@ -59,8 +59,8 @@ public class RedisController {
 					if (Constant.gameInfoStorageType == 0 ) {
 						jedisTemplate.del(request.getKey());
 					}else{
-						if ("logInfoFuse".equals(request.getKey())) {
-							GameInfoMemoryContainer.logInfoFuse = null;
+						if ("logFuse".equals(request.getKey())) {
+							GameInfoMemoryContainer.logFuse = null;
 						}else if("loginFuse".equals(request.getKey())){
 							GameInfoMemoryContainer.loginFuse = null;
 						}else if("tokenUserInfoMap".equals(request.getKey())){

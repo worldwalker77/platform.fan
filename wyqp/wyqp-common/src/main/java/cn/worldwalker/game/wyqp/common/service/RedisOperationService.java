@@ -460,7 +460,7 @@ public class RedisOperationService {
 		if (gameInfoStorageType == 0 ) {
 			logInfoFuseValue = jedisTemplate.get(Constant.logInfoFuse);
 		}else{
-			logInfoFuseValue = GameInfoMemoryContainer.logInfoFuse;
+			logInfoFuseValue = GameInfoMemoryContainer.logFuse;
 		}
 		if ("1".equals(logInfoFuseValue)) {
 			return true;

@@ -223,4 +223,24 @@ public class GameController {
 		return result;
 	}
 	
+	@RequestMapping("login1")
+	@ResponseBody
+	public Result login1(String code,String deviceType,HttpServletResponse response,HttpServletRequest request){
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		Result result = new Result();
+		try {
+			if (redisOperationService.isLoginFuseOpen()) {
+				result = commonGameService.login(code, deviceType, request);
+			}else{
+				result = commonGameService.login1(code, deviceType, request);
+			}
+			
+		} catch (Exception e) {
+			log.error("code:" + code, e);
+			result.setCode(1);
+			result.setDesc("系统异常");
+		}
+		return result;
+	}
+	
 }
